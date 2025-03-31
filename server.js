@@ -14,7 +14,8 @@ const app = express();
 
 // CORS Configuration
 app.use(cors({
-  origin: "https://blood-ledger-eight.vercel.app/", // Allow frontend
+  origin: "https://blood-ledger-eight.vercel.app/",
+  methods: "GET,POST,PUT,DELETE",  // Allow frontend
   credentials: true // Allow cookies & authentication headers
 }));
 
