@@ -4,6 +4,7 @@ const colors = require('colors');
 const morgan = require('morgan');
 const cors = require('cors');
 const connectDB = require('./config/db.js');
+const allowedOrigins = ["https://blood-ledger-eight.vercel.app"];
 
 dotenv.config();
 
@@ -14,10 +15,15 @@ const app = express();
 
 // CORS Configuration
 app.use(cors({
-  origin: "https://blood-ledger-eight.vercel.app/",
-  methods: "GET,POST,PUT,DELETE",  // Allow frontend
-  credentials: true // Allow cookies & authentication headers
-}));
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  }));
 
 // Middlewares
 app.use(express.json());
