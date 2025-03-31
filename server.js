@@ -14,7 +14,7 @@ const app = express();
 
 // CORS Configuration
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "https://blood-ledger-frontend.vercel.app/", // Allow frontend
+  origin: "https://blood-ledger-eight.vercel.app/", // Allow frontend
   credentials: true // Allow cookies & authentication headers
 }));
 
