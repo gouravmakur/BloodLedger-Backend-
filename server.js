@@ -12,8 +12,13 @@ connectDB();
 
 const app = express();
 
+// CORS Configuration
+app.use(cors({
+  origin: process.env.FRONTEND_URL || "https://blood-ledger-frontend.vercel.app/", // Allow frontend
+  credentials: true // Allow cookies & authentication headers
+}));
+
 // Middlewares
-app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
@@ -24,12 +29,13 @@ app.use('/api/v1/inventory', require('./routes/inventoryRoutes.js'));
 app.use('/api/v1/analytics', require('./routes/analyticsRoutes.js'));
 app.use('/api/v1/admin', require('./routes/adminRoutes.js'));
 
-// Root Route to fix 404 error
+// Root Route (For Testing)
 app.get("/", (req, res) => {
     res.send("BloodLedger Backend is running!");
 });
 
+// Server Port
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () =>
-    console.log(`Server running in ${process.env.DEV_MODE} on ${PORT}`.bgBlue.white)
+    console.log(`Server running in ${process.env.DEV_MODE} on port ${PORT}`.bgBlue.white)
 );
